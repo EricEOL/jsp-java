@@ -9,7 +9,7 @@
 <body>
 	<h1>Hello JSP</h1>
 	
-	<form action="receber-nome.jsp">
+	<form action="ServletLogin" method="POST">
 		<input name="nome" />
 		<input name="idade" />
 		<button type="submit">Enviar</button>
