@@ -8,5 +8,11 @@
 </head>
 <body>
 	<h1>Hello JSP</h1>
+	
+	<form action="receber-nome.jsp">
+		<input name="nome" />
+		<input name="idade" />
+		<button type="submit">Enviar</button>
+	</form>
 </body>
 </html>
