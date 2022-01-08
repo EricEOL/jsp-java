@@ -8,10 +8,5 @@
 </head>
 <body>
 	<h1>Hello JSP</h1>
-	
-	<% 
-		out.print(request.getCookies().toString());
-		
-	%>
 </body>
 </html>
