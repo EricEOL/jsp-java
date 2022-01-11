@@ -1,7 +1,10 @@
 package filter;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
+import connection.SingleConnectionDB;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -16,37 +19,54 @@ import jakarta.servlet.http.HttpSession;
 @WebFilter(urlPatterns = { "/principal/*" })
 public class FilterAuthenticator implements Filter {
 
+	private static Connection connection;
+
 	public FilterAuthenticator() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void destroy() {
-		// TODO Auto-generated method stub
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpSession session = req.getSession();
+		try {
+			HttpServletRequest req = (HttpServletRequest) request;
+			HttpSession session = req.getSession();
 
-		String loggedUser = (String) session.getAttribute("user");
+			String loggedUser = (String) session.getAttribute("user");
 
-		String urlToAuthenticate = req.getServletPath();
+			String urlToAuthenticate = req.getServletPath();
 
-		if (loggedUser == null && !urlToAuthenticate.equalsIgnoreCase("/principal/ServletLogin")) {
-			RequestDispatcher redirector = request.getRequestDispatcher("/index.jsp?url=" + urlToAuthenticate);
+			if (loggedUser == null && !urlToAuthenticate.equalsIgnoreCase("/principal/ServletLogin")) {
+				RequestDispatcher redirector = request.getRequestDispatcher("/index.jsp?url=" + urlToAuthenticate);
 
-			request.setAttribute("msg", "Por favor, realize o login");
-			redirector.forward(request, response);
-			return;
-		} else {
-			chain.doFilter(request, response);
+				request.setAttribute("msg", "Por favor, realize o login");
+				redirector.forward(request, response);
+				return;
+			} else {
+				chain.doFilter(request, response);
+			}
+			
+			connection.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
+		connection = SingleConnectionDB.getConnection();
 	}
 
 }
