@@ -57,6 +57,11 @@ public class FilterAuthenticator implements Filter {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			RequestDispatcher redirecionador = request.getRequestDispatcher("erro.jsp");
+			request.setAttribute("msg", e.getMessage());
+			redirecionador.forward(request, response);
+			
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
