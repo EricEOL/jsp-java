@@ -22,7 +22,17 @@ public class ServletLogin extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doPost(request, response);
+		
+		String action = request.getParameter("action");
+		
+		if(action !=null && !action.isEmpty() && action.equalsIgnoreCase("logout")) {
+			request.getSession().invalidate();
+			RequestDispatcher redirecionador = request.getRequestDispatcher("/index.jsp");
+			request.setAttribute("msg", "Deslogado com sucesso!");
+			redirecionador.forward(request, response); 
+		} else {
+			doPost(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -48,7 +58,6 @@ public class ServletLogin extends HttpServlet {
 					}
 
 					RequestDispatcher redirecionador = request.getRequestDispatcher(url);
-					request.setAttribute("nome", login);
 					redirecionador.forward(request, response);
 				} else {
 					RequestDispatcher redirecionador = request.getRequestDispatcher("/index.jsp");
