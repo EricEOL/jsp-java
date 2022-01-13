@@ -7,9 +7,7 @@
 <jsp:include page="head.jsp"></jsp:include>
 
 <body>
-	<!-- Pre-loader start -->
 	<jsp:include page="loader.jsp"></jsp:include>
-	<!-- Pre-loader end -->
 	<div id="pcoded" class="pcoded">
 		<div class="pcoded-overlay-box"></div>
 		<div class="pcoded-container navbar-wrapper">
@@ -22,20 +20,15 @@
 					<jsp:include page="navmenu.jsp"></jsp:include>
 
 					<div class="pcoded-content">
-						<!-- Page-header start -->
 
 						<jsp:include page="header.jsp"></jsp:include>
 
-						<!-- Page-header end -->
 						<div class="pcoded-inner-content">
-							<!-- Main-body start -->
 							<div class="main-body">
 								<div class="page-wrapper">
-									<!-- Page-body start -->
 									<div class="page-body">
 										<div class="row">
 											<div class="col-sm-12">
-												<!-- Basic Form Inputs card start -->
 												<div class="card">
 													<div class="card-header">
 														<h5>Cadastrar novo usuário</h5>
@@ -44,36 +37,40 @@
 														<h4 class="sub-title">Preencha as informações
 															necessárias</h4>
 
-														<form>
+														<form action="<%= request.getContextPath() %>/ServletUsuarioController" method="POST">
 															<div class="form-group row">
-																<div class="col-sm-6">
+																<div class="col-sm-4">
 																	<input type="text" name="id" class="form-control"
 																		placeholder="Id" readonly>
 																</div>
-																<div class="col-sm-6">
+																<div class="col-sm-4">
+																	<input type="text" name="login" class="form-control"
+																		placeholder="Login" required>
+																</div>
+																<div class="col-sm-4">
 																	<input type="text" name="nome" class="form-control"
-																		placeholder="Nome">
+																		placeholder="Nome" required>
 																</div>
 															</div>
 															<div class="form-group row">
 																<div class="col-sm-6">
 																	<input type="password" name="senha"
-																		class="form-control" placeholder="Senha">
+																		class="form-control" placeholder="Senha" required>
 																</div>
 																<div class="col-sm-6">
 																	<input type="email" name="email" class="form-control"
-																		placeholder="Email">
+																		placeholder="Email" required>
 																</div>
 															</div>
-															<button class="btn btn-primary waves-effect waves-light">Enviar</button>
+															<button type="submit" class="btn btn-primary waves-effect waves-light">Novo</button>
+															<button type="submit" class="btn btn-secondary waves-effect waves-light">Salvar</button>
+															<button type="submit" class="btn btn-danger waves-effect waves-light">Excluir</button>
 														</form>
 													</div>
 												</div>
 											</div>
 										</div>
-										<!--  project and team member end -->
 									</div>
-									<!-- Page-body end -->
 								</div>
 								<div id="styleSelector"></div>
 							</div>
