@@ -1,3 +1,4 @@
+<%@page import="model.ModelLogin"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -40,25 +41,25 @@
 														<form action="<%= request.getContextPath() %>/ServletUsuarioController" method="POST">
 															<div class="form-group row">
 																<div class="col-sm-4">
-																	<input type="text" name="id" class="form-control"
+																	<input type="text" name="id" class="form-control" value="${modelLogin.id}"
 																		placeholder="Id" readonly>
 																</div>
 																<div class="col-sm-4">
-																	<input type="text" name="login" class="form-control"
+																	<input type="text" name="login" value="${modelLogin.login}" class="form-control"
 																		placeholder="Login" required>
 																</div>
 																<div class="col-sm-4">
-																	<input type="text" name="nome" class="form-control"
+																	<input type="text" name="nome" value="${modelLogin.nome}" class="form-control"
 																		placeholder="Nome" required>
 																</div>
 															</div>
 															<div class="form-group row">
 																<div class="col-sm-6">
-																	<input type="password" name="senha"
+																	<input type="password" name="senha" value="${modelLogin.password}"
 																		class="form-control" placeholder="Senha" required>
 																</div>
 																<div class="col-sm-6">
-																	<input type="email" name="email" class="form-control"
+																	<input type="email" name="email" class="form-control" value="${modelLogin.email}"
 																		placeholder="Email" required>
 																</div>
 															</div>

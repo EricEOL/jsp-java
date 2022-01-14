@@ -34,8 +34,9 @@ public class ServletUsuarioController extends HttpServlet {
 		modelLogin.setNome(nome);
 		modelLogin.setEmail(email);
 		
-		RequestDispatcher redirecionador = request.getRequestDispatcher("principal/cadastroUsuario.jsp");
-		redirecionador.forward(request, response);
+		request.setAttribute("modelLogin", modelLogin);
+		
+		request.getRequestDispatcher("principal/cadastroUsuario.jsp").forward(request, response);
 	}
 
 }
