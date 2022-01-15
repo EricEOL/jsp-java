@@ -23,3 +23,13 @@ ALTER TABLE IF EXISTS public.model_login
 INSERT INTO public.model_login(
 	login, senha)
 	VALUES ('admin', 'admin');
+	
+ALTER TABLE IF EXISTS public.model_login
+    ADD COLUMN id integer NOT NULL DEFAULT nextval('model_login_id_seq'::regclass);
+
+ALTER TABLE IF EXISTS public.model_login
+    ADD COLUMN nome character varying(300) COLLATE pg_catalog."default";
+
+ALTER TABLE IF EXISTS public.model_login
+    ADD COLUMN email character varying(300) COLLATE pg_catalog."default";
+    

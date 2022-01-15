@@ -67,6 +67,7 @@
 															<button type="submit" class="btn btn-secondary waves-effect waves-light">Salvar</button>
 															<button type="submit" class="btn btn-danger waves-effect waves-light">Excluir</button>
 														</form>
+														<p>${msg}</p>
 													</div>
 												</div>
 											</div>

@@ -1,7 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import dao.DAOUsuarioRepository;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,6 +15,8 @@ import model.ModelLogin;
 @WebServlet("/ServletUsuarioController")
 public class ServletUsuarioController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private DAOUsuarioRepository daoUsuarioRepository = new DAOUsuarioRepository();
 
     public ServletUsuarioController() {
     }
@@ -33,9 +37,18 @@ public class ServletUsuarioController extends HttpServlet {
 		modelLogin.setSenha(senha);
 		modelLogin.setNome(nome);
 		modelLogin.setEmail(email);
+
+		try {
+			daoUsuarioRepository.salvarUsuario(modelLogin);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			RequestDispatcher redirecionador = request.getRequestDispatcher("erro.jsp");
+			request.setAttribute("msg", e.getMessage());
+			redirecionador.forward(request, response);
+		}
 		
+		request.setAttribute("msg", "Operação realizada com sucesso!");
 		request.setAttribute("modelLogin", modelLogin);
-		
 		request.getRequestDispatcher("principal/cadastroUsuario.jsp").forward(request, response);
 	}
 
