@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import connection.SingleConnectionDB;
@@ -15,7 +16,7 @@ public class DAOUsuarioRepository {
 		connection = SingleConnectionDB.getConnection();
 	}
 
-	public void salvarUsuario(ModelLogin objeto) throws SQLException {
+	public ModelLogin salvarUsuario(ModelLogin objeto) throws SQLException {
 		String sql = "INSERT INTO model_login (login, senha, nome, email) VALUES (?, ?, ?, ?)";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -26,5 +27,29 @@ public class DAOUsuarioRepository {
 
 		preparedStatement.execute();
 		connection.commit();
+		
+		return this.consultarUsuario(objeto.getLogin());
+	}
+	
+	public ModelLogin consultarUsuario(String login) throws SQLException {
+		
+		String sql = "SELECT * FROM model_login WHERE login = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, login);
+		
+		ResultSet result = preparedStatement.executeQuery();
+		
+		ModelLogin modelLogin = new ModelLogin();
+		
+		if(result.next()) {
+			modelLogin.setId(result.getLong("id"));
+			modelLogin.setLogin(result.getString("login"));
+			modelLogin.setSenha(result.getString("senha"));
+			modelLogin.setNome(result.getString("nome"));
+			modelLogin.setEmail(result.getString("email"));
+			
+		}
+		
+		return modelLogin;
 	}
 }

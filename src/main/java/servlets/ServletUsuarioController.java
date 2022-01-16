@@ -39,7 +39,7 @@ public class ServletUsuarioController extends HttpServlet {
 		modelLogin.setEmail(email);
 
 		try {
-			daoUsuarioRepository.salvarUsuario(modelLogin);
+			modelLogin = daoUsuarioRepository.salvarUsuario(modelLogin);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			RequestDispatcher redirecionador = request.getRequestDispatcher("erro.jsp");
@@ -49,7 +49,7 @@ public class ServletUsuarioController extends HttpServlet {
 		
 		request.setAttribute("msg", "Operação realizada com sucesso!");
 		request.setAttribute("modelLogin", modelLogin);
-		request.getRequestDispatcher("principal/cadastroUsuario.jsp").forward(request, response);
+		request.getRequestDispatcher("/principal/cadastroUsuario.jsp").forward(request, response);
 	}
 
 }

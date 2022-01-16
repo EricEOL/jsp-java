@@ -55,7 +55,7 @@
 															</div>
 															<div class="form-group row">
 																<div class="col-sm-6">
-																	<input type="password" name="senha" value="${modelLogin.password}"
+																	<input type="password" name="senha" value="${modelLogin.senha}"
 																		class="form-control" placeholder="Senha" required>
 																</div>
 																<div class="col-sm-6">
