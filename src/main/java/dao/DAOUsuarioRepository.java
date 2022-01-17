@@ -16,19 +16,21 @@ public class DAOUsuarioRepository {
 		connection = SingleConnectionDB.getConnection();
 	}
 
-	public ModelLogin salvarUsuario(ModelLogin objeto) throws SQLException {
-		String sql = "INSERT INTO model_login (login, senha, nome, email) VALUES (?, ?, ?, ?)";
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-		preparedStatement.setString(1, objeto.getLogin());
-		preparedStatement.setString(2, objeto.getSenha());
-		preparedStatement.setString(3, objeto.getNome());
-		preparedStatement.setString(4, objeto.getEmail());
-
-		preparedStatement.execute();
-		connection.commit();
+	public ModelLogin salvarUsuario(ModelLogin objeto) throws SQLException, Exception {
 		
-		return this.consultarUsuario(objeto.getLogin());
+			String sql = "INSERT INTO model_login (login, senha, nome, email) VALUES (?, ?, ?, ?)";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, objeto.getLogin());
+			preparedStatement.setString(2, objeto.getSenha());
+			preparedStatement.setString(3, objeto.getNome());
+			preparedStatement.setString(4, objeto.getEmail());
+
+			preparedStatement.execute();
+			connection.commit();
+			
+			return this.consultarUsuario(objeto.getLogin());
+			
 	}
 	
 	public ModelLogin consultarUsuario(String login) throws SQLException {
@@ -51,5 +53,20 @@ public class DAOUsuarioRepository {
 		}
 		
 		return modelLogin;
+	}
+	
+	public boolean usuarioJaExiste(String login) throws SQLException {
+		
+		String sql = "SELECT * FROM model_login WHERE login = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setString(1, login);
+		
+		ResultSet result = preparedStatement.executeQuery();
+		
+		if(result.next()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

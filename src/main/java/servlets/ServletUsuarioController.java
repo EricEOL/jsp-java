@@ -25,6 +25,9 @@ public class ServletUsuarioController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String msg = "Operação realizada com sucesso";
+		
 		String id = request.getParameter("id");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
@@ -39,15 +42,21 @@ public class ServletUsuarioController extends HttpServlet {
 		modelLogin.setEmail(email);
 
 		try {
-			modelLogin = daoUsuarioRepository.salvarUsuario(modelLogin);
-		} catch (SQLException e) {
+			
+			if(daoUsuarioRepository.usuarioJaExiste(modelLogin.getLogin()) && modelLogin.getId() == null) {
+				msg = "Esse login já existe. Por favor utilize outro.";
+			} else {
+				request.setAttribute("msg", "Operação realizada com sucesso!");
+			}
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 			RequestDispatcher redirecionador = request.getRequestDispatcher("erro.jsp");
 			request.setAttribute("msg", e.getMessage());
 			redirecionador.forward(request, response);
 		}
 		
-		request.setAttribute("msg", "Operação realizada com sucesso!");
+		request.setAttribute("msg", msg);
 		request.setAttribute("modelLogin", modelLogin);
 		request.getRequestDispatcher("/principal/cadastroUsuario.jsp").forward(request, response);
 	}
